@@ -1,12 +1,12 @@
 import time
-from turtle import Screen, Turtle
+from turtle import Screen
 
 from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
 
 screen = Screen()
-screen.setup(width=500, height=500)
+screen.setup(width=410, height=410)
 screen.bgcolor('black')
 screen.title('Snake Game')
 screen.tracer(0)
@@ -28,6 +28,7 @@ screen.onkey(snake.left, 'a')
 screen.onkey(snake.right, 'd')
 
 game_is_on = True
+
 while game_is_on:
     screen.update()
     time.sleep(0.03)
@@ -40,14 +41,16 @@ while game_is_on:
         scoreboard.add_new_score()
 
     # Detect collusion with wall
-    if snake.head.xcor() > 235 or snake.head.ycor() > 240 or snake.head.xcor() < -245 or snake.head.ycor() < -235:
+    if snake.head.xcor() > 190 or snake.head.ycor() > 200 or snake.head.xcor() < -200 or snake.head.ycor() < -190:
+        scoreboard.reset()
+        snake.reset()
         game_is_on = False
-        scoreboard.game_over()
 
     # Detect collusion with tail
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 4:
+            scoreboard.reset()
+            snake.reset()
             game_is_on = False
-            scoreboard.game_over()
 
 screen.exitonclick()
